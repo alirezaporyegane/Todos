@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { setStatic } = require('./utils/static');
+const sequelize = require('./utils/database');
 const adminRoutes = require('./routes/admin');
 const indexRoutes = require('./routes/index');
 const { get404 } = require('./controllers/error');
@@ -29,4 +30,11 @@ app.use(indexRoutes)
 // 404
 app.use(get404)
 
-app.listen(3000, () => console.log('Server Is Running'))
+
+sequelize.sync()
+  .then(result => {
+    console.log(result);
+    app.listen(3000, () => console.log('Server Is Running'))
+}).catch(err => {
+    console.log(err);
+})

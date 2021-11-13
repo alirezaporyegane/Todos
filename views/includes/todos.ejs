@@ -2,8 +2,8 @@
   <ul class="list-unstyled" id="todo">
     <% for(let todo of todos) {%>
       <li>
-        <div class="alert <%= todo.complated ? 'alert-success' : 'alert-warning text-dark' %> ">
-          <% if(todo.complated) { %>
+        <div class="alert <%= todo.completed ? 'alert-success' : 'alert-warning text-dark' %> ">
+          <% if(todo.completed) { %>
             <del><%= todo.text %></del>
             <a href="/admin/delete-todo/<%= todo.id %>" class="close fa fa-trash text-danger"></a>
           <% } else { %>

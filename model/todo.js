@@ -1,45 +1,24 @@
-const { getTodos, saveTodos } = require('../utils/todos');
-class Todo {
-  constructor (id, text, complated = false) {
-    this.id = id;
-    this.text = text;
-    this.complated = complated;
-  }
+const { DataTypes } = require('sequelize');
 
-  save (callback) {
-    getTodos(todo => {
-      todo.push(this);
-      saveTodos(todo, (err) => {
-        callback(err)
-      })
-    })
-  }
+const sequelize = require('../utils/database');
 
-  static fetchAll (callback) {
-    getTodos(todos => {
-      callback(todos)
-    })
+const Todo = sequelize.define("Todo", {
+  // Model attribute
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false
+  },
+  text: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  completed: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: true //default is true
   }
-
-  static deleteTodo (id, callback) {
-    getTodos(todos => {
-      saveTodos(todos.filter(t => t.id != id), (err) => {
-        callback(err)
-      })
-    })
-  }
-
-  static setTodoToComplate (id, callback) {
-    getTodos(todos => {
-      const todoIndex = todos.findIndex(t => t.id == id);
-      const todo = todos[todoIndex];
-      todo.complated = true;
-      todos[todoIndex] = todo;
-      saveTodos(todos, (err) => {
-        callback(err)
-      })
-    })
-  }
-}
+})
 
 module.exports = Todo;
