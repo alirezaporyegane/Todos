@@ -1,8 +1,8 @@
 <%- include ('./includes/head.ejs') %> 
-  <div class="form-group">
-      <h1>کارهای <small>روزمره</small></h1>
+  <div class="form-group h-100 d-flex flex-column align-items-center justify-content-center">
+      <h1 class="mb-5">کارهای روزمره </h1>
       <%- include ('./includes/todoForm.ejs') %> 
-      <div class="mx-auto w-50 mb-3 alert alert-primary row">
+      <div class="mx-auto w-50 mb-5 alert alert-primary row">
           <p class="d-inline col">کارهای انجام شده : <span class="badge badge-success badge-pill"><%= completeTodo %> </span></p>
           <p class="d-inline col">کارهای باقی مانده امروز : <span class="badge badge-warning badge-pill"><%= remainingTodo %> </span></p>
       </div>
