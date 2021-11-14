@@ -33,7 +33,6 @@ app.use(get404)
 
 sequelize.sync()
   .then(result => {
-    console.log(result);
     app.listen(3000, () => console.log('Server Is Running'))
 }).catch(err => {
     console.log(err);

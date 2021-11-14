@@ -1,34 +1,31 @@
 const Todo = require('../model/todo');
 
-exports.addTodo = (req, res) => {
+exports.addTodo = async (req, res) => {
   if (!req.body.todo) return res.redirect("/");
-  Todo.create({
-    text: req.body.todo
-  })
-    .then(() => {
-      res.redirect("/")
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  try {
+    await Todo.create({ text: req.body.todo });
+    res.redirect("/")
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-exports.deleteTodo = (req, res) => {
-  Todo.destroy({where: { id: req.params.id }})
-    .then(() => {
-      res.redirect("/")
-    })
-    .catch(err => {
-      console.log(err);
-    })
+exports.deleteTodo = async (req, res) => {
+  try {
+    await Todo.destroy({ where: { id: req.params.id} })
+    res.redirect("/")
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-exports.completetodo = (req, res) => {
-  Todo.findByPk(req.params.id)
-    .then(todo => {
-      todo.completed = true;
-      return todo.save();
-    })
-    .then(() => res.redirect("/"))
-    .catch(err => console.log(err))
+exports.completetodo = async (req, res) => {
+  try {
+    const todo = await Todo.findByPk(req.params.id)
+    todo.completed = true
+    await todo.save()
+    res.redirect("/")
+  } catch (err) {
+    console.log(err);
+  }
 }
